@@ -6,9 +6,10 @@ use Consumer\Consumer;
 
 $consumer = new Consumer();
 
+var_dump($consumer->API('https://reqres.in/api/','users','POST',['name'=>'morpheus','job'=>'leader']));
 var_dump($consumer->API('https://reqres.in/api/','users','GET',[]));
 
-var_dump($consumer->file(__DIR__,'json','dummy.json'));
+//var_dump($consumer->file(__DIR__,'json','dummy.json'));
 
 
 

@@ -86,15 +86,18 @@ Class ApiCollectors implements DataReader{
 				break;
 			case 'POST':
 			$res = $client->request('POST', $this->getPath(), [
-			    'form_params' => $this->getRequest_parameters()
+			    'json' => $this->getRequest_parameters(),
+			   
+			  'debug' => false
 			    
 			]);
+			//var_dump($res->getBody());die;
 			default:
 				# code...
 				break;
 		}
 		
-		if($res->getStatusCode() == 200){
+		if(($res->getStatusCode() == 200) || $res->getStatusCode() == 201){
 
 		   $this->setResponse($res);
 		   //echo $this->getResponse()->getHeader('Content-Type')[0];
@@ -114,7 +117,7 @@ Class ApiCollectors implements DataReader{
 		}else{
 			//check if JSON or XML
 			if((strpos($this->getResponse()->getHeader('Content-Type')[0], 'application/json') !== false)){
-				return json_decode($this->getResponse()->getBody(),true);
+				return json_decode($this->getResponse()->getBody()->getContents(),true);
 			}
 
 			if((strpos($this->getResponse()->getHeader('Content-Type')[0], 'text/xml') !== false))
